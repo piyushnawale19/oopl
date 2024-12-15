@@ -57,9 +57,7 @@ class Magazine extends Publication
         this.currentIssue = newIssue; 
     } 
 } 
- 
- 
- 
+  
 public class PublicationDemo  
 { 
     public static void main(String[] args)  
