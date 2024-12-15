@@ -1,0 +1,245 @@
+Assignment No 11 
+// PaymentStrategy.java 
+public interface PaymentStrategy { 
+void pay(double amount); 
+} 
+// CreditCardPayment.java 
+import java.util.Scanner; 
+public class CreditCardPayment implements PaymentStrategy  
+{ 
+private String name; 
+private String cardNumber; 
+private String cvv; 
+private String expiryDate; 
+public CreditCardPayment(String name, String cardNumber, String 
+cvv, String expiryDate)  
+{ 
+} 
+this.name = name; 
+this.cardNumber = cardNumber; 
+this.cvv = cvv; 
+this.expiryDate = expiryDate; 
+    
+    public void pay(double amount) 
+   { 
+        System.out.println("You paid " + amount + " using Credit 
+Card."); 
+    } 
+ 
+    public static PaymentStrategy getDetails()  
+     { 
+        Scanner scanner = new Scanner(System.in); 
+ 
+        System.out.println("Enter Card Holder Name: "); 
+        String name = scanner.nextLine(); 
+         
+        System.out.println("Enter Card Number: "); 
+        String cardNumber = scanner.nextLine(); 
+ 
+        System.out.println("Enter CVV: "); 
+        String cvv = scanner.nextLine(); 
+ 
+        System.out.println("Enter Expiry Date (MM/YY): "); 
+        String expiryDate = scanner.nextLine(); 
+ 
+        return new CreditCardPayment(name, cardNumber, cvv, 
+expiryDate); 
+} 
+} 
+// PayPalPayment.java 
+import java.util.Scanner; 
+public class PayPalPayment implements PaymentStrategy 
+{ 
+private String email; 
+private String password; 
+public PayPalPayment(String email, String password) { 
+this.email = email; 
+this.password = password; 
+} 
+public void pay(double amount)  
+{ 
+System.out.println("You paid " + amount + " using PayPal."); 
+} 
+public static PaymentStrategy getDetails()  
+{ 
+Scanner scanner = new Scanner(System.in); 
+System.out.println("Enter PayPal Email: "); 
+String email = scanner.nextLine(); 
+System.out.println("Enter PayPal Password: "); 
+String password = scanner.nextLine(); 
+return new PayPalPayment(email, password); 
+} 
+} 
+// BitcoinPayment.java 
+import java.util.Scanner; 
+public class BitcoinPayment implements PaymentStrategy  
+{ 
+private String bitcoinAddress; 
+public BitcoinPayment(String bitcoinAddress)  
+{ 
+this.bitcoinAddress = bitcoinAddress; 
+} 
+public void pay(double amount)  
+{ 
+System.out.println("You paid " + amount + " using Bitcoin."); 
+} 
+public static PaymentStrategy getDetails()  
+{ 
+        Scanner scanner = new Scanner(System.in); 
+ 
+        System.out.println("Enter Bitcoin Address: "); 
+        String bitcoinAddress = scanner.nextLine(); 
+ 
+        return new BitcoinPayment(bitcoinAddress); 
+    } 
+} 
+// Item.java 
+public class Item  
+{ 
+    private String name; 
+    private double price; 
+ 
+    public Item(String name, double price)  
+ { 
+        this.name = name; 
+        this.price = price; 
+    } 
+ 
+    public String getName() 
+   { 
+        return name; 
+    } 
+ 
+public double getPrice()  
+{ 
+return price; 
+} 
+} 
+// ShoppingCart.java 
+import java.util.ArrayList; 
+import java.util.List; 
+public class ShoppingCart 
+{ 
+private List<Item> items; 
+public ShoppingCart()  
+{ 
+this.items = new ArrayList<>(); 
+} 
+public void addItem(Item item) 
+{ 
+items.add(item); 
+} 
+   
+ 
+     public void removeItem(Item item)  
+      { 
+          items.remove(item); 
+      } 
+ 
+    public double calculateTotal()  
+    { 
+        double total = 0; 
+        for (Item item : items)  
+      { 
+            total += item.getPrice(); 
+        } 
+        return total; 
+    } 
+ 
+    public void checkout(PaymentStrategy paymentMethod)  
+    { 
+        double total = calculateTotal(); 
+        paymentMethod.pay(total); 
+    } 
+} 
+ 
+ 
+ 
+ 
+// Main.java 
+import java.util.Scanner; 
+ 
+public class Main  
+  { 
+        public static void main(String[] args)  
+        { 
+           ShoppingCart cart = new ShoppingCart(); 
+ 
+        // Adding items to the cart 
+        cart.addItem(new Item("Laptop", 1200.00)); 
+        cart.addItem(new Item("Smartphone", 800.00)); 
+        cart.addItem(new Item("Headphones", 150.00)); 
+ 
+        System.out.println("Total Bill: $" + cart.calculateTotal()); 
+ 
+        // Choose payment method 
+        Scanner scanner = new Scanner(System.in); 
+        System.out.println("Choose Payment Method: "); 
+        System.out.println("1. Credit Card"); 
+        System.out.println("2. PayPal"); 
+        System.out.println("3. Bitcoin"); 
+        int choice = scanner.nextInt(); 
+        PaymentStrategy paymentMethod; 
+ 
+        switch (choice)  
+       { 
+            case 1: 
+                paymentMethod = CreditCardPayment.getDetails(); 
+                break; 
+            case 2: 
+                paymentMethod = PayPalPayment.getDetails(); 
+                break; 
+            case 3: 
+                paymentMethod = BitcoinPayment.getDetails(); 
+                break; 
+            default: 
+                System.out.println("Invalid choice, using default payment 
+method (Credit Card)"); 
+                paymentMethod = CreditCardPayment.getDetails(); 
+                break; 
+        } 
+ 
+        // Checkout 
+        cart.checkout(paymentMethod); 
+    } 
+} 
+ 
+Output 
+(If user select Credit Card payment method) 
+Total Bill: $2150.0 
+Choose Payment Method: 
+1. Credit Card 
+2. PayPal 
+3. Bitcoin 
+1 
+Enter Card Holder Name: 
+John 
+Enter Card Number: 
+1234 5678 9876 5432 
+Enter CVV: 
+123 
+Enter Expiry Date (MM/YY): 
+21/11 
+You paid 2150.0 using Credit Card. 
+(If user select Paypal Payment Method) 
+Total Bill: $2150.0 
+Choose Payment Method: 
+1. Credit Card 
+2. PayPal 
+3. Bitcoin 
+2 
+Enter PayPal Email: 
+john@123 
+Enter PayPal Password: 
+john 
+You paid 2150.0 using PayPal. 
+(If user select Bitcoin Payment Method) 
+Total Bill: $2150.0 
+Choose Payment Method: 
+1. Credit Card 
+2. PayPal 
+3. Bitcoin 
+3 
+Enter Bitcoin Address: 
+1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa 
+You paid 2150.0 using Bitcoin. 

@@ -1,0 +1,188 @@
+    Assignment No:7 
+import java.util.*; 
+import java.lang.*; 
+import java.io.*; 
+public class GenericFunctionExample 
+{ 
+ static int count = 0;  
+ //Function to check palindrome 
+ static void check_palindrome(String x) 
+    { 
+       StringBuilder s1 = new StringBuilder(x); 
+       if(x.equals(s1.reverse().toString())) 
+        { 
+              System.out.println(x+" is a Palindrome"); 
+              count += 1; //count the number of palindromes 
+         } 
+      else 
+       { 
+           System.out.println(x+" is not a Palindrome"); 
+       } 
+     } 
+ //Function to check even or odd number 
+  static void even_odd(int x) 
+{ 
+       if(x % 2 == 0) 
+      { 
+                        System.out.println(x+" is Even Number"); 
+                     count += 1; //count the number of even numbers 
+               } 
+             else 
+              { 
+                   System.out.println(x+" is Odd Number"); 
+              } 
+       } 
+//Function to check Prime Number 
+      static void prime(int x) 
+     { 
+          boolean flag = false; 
+         for(int i = 2; i <= x/2; i++) 
+      { 
+           if(x % i == 0) 
+          { 
+             flag = true; 
+             break; 
+        } 
+    } 
+       if (!flag) // flag ==false 
+     { 
+         System.out.println(x + " is a prime number."); 
+        count += 1; //count the number of prime numbers 
+     } 
+   else 
+     { 
+          System.out.println(x + " is not a prime number."); 
+   }  
+ } 
+static void check(int ch,int x) 
+     { 
+         switch(ch) 
+      { 
+            case 1: 
+                       even_odd(x); //call even_odd fucntion for number x 
+                       break; 
+           case 2: 
+                    prime(x); //call prime function for number x 
+                    break; 
+        default: 
+              System.out.println("ENTER CORRECT OPTION"); 
+        } 
+    }  
+//Function for integer Array 
+   static void number_op() 
+      { 
+          int element, n, choice; 
+         Scanner sc = new Scanner(System.in); 
+       //ArrayList from Collection Interface 
+       //Integer type 
+        ArrayList<Integer> nums = new ArrayList<Integer>();  
+        System.out.println("Enter the total number of elements:"); 
+         n = sc.nextInt(); 
+         System.out.println("Enter the elements:"); 
+  
+            for(int i=0;i<n;i++) 
+            { 
+                 element = sc.nextInt(); 
+                 nums.add(element); //Add elements to the ArrayList 
+            } 
+          System.out.println("***You have following choice on Integer                        
+Numbers****"); 
+         System.out.println("1. Check Number is ODD or EVEN "); 
+         System.out.println("2. Check Number is PRIME OR NOT"); 
+         System.out.print("Enter your choice :"); 
+          choice = sc.nextInt(); 
+         Iterator itr = nums.iterator(); //Iterator from the COLLECTION interface 
+         count = 0; 
+        while(itr.hasNext()) 
+        { 
+ //Loop till there are elements in the ArrayList 
+         check(choice,(int)itr.next()); //call the check function for each element 
+       } 
+          //Give the Count 
+          if(choice == 1) 
+         { 
+           System.out.println("The number of Even numbers is: "+ count); 
+           System.out.println("The number of Odd numbers is: "+ (nums.size()-  
+                        count)); 
+        } 
+         else 
+ 
+       { 
+           System.out.println(" Number of Prime numbers is: "+ count); 
+           System.out.println(" Number of Non-Prime numbers is: " 
+                 +(nums.size()-count)); 
+       } 
+   }  
+ //Function for String Array 
+      static void string_op() 
+    { 
+        int n; 
+        String word; 
+     //ArrayList from COLLECTION interface 
+      //String type 
+       ArrayList<String> words = new ArrayList<String>(); 
+       Scanner sc = new Scanner(System.in); 
+       System.out.println("Enter the total number of elements:"); 
+        n = sc.nextInt(); 
+        System.out.println("Enter elements:"); 
+        for(int i=0;i<n;i++) 
+        { 
+             word = sc.next(); 
+             words.add(word); //Add elements to the ArrayList 
+        } 
+        count = 0; 
+        for(String w:words){ //Loop the ArrayList 
+        check_palindrome(w); 
+      } 
+  
+         System.out.println("The Number of Palindrome is: "+ count); 
+    } 
+        // Main Function 
+      public static void main(String[] args) 
+     { 
+          Scanner sc = new Scanner(System.in); 
+          System.out.println("*****We have following data type to perform       
+operations*****"); 
+          System.out.println("1. Integer"); 
+          System.out.println("2. String"); 
+         System.out.print(“Enter your choice: ”); 
+          int ch = sc.nextInt(); 
+          if(ch == 1) 
+            { 
+               number_op(); //Calls Interger arraylist 
+            } 
+        else if(ch==2) 
+          { 
+             string_op(); //Calls String arraylist 
+          } 
+        else 
+         { 
+            System.out.println("Enter valid choice"); 
+         } 
+     } 
+} 
+ 
+Output 
+*******We have following data type to perform operations******* 
+1. Integer 
+2. String 
+Enter your choice: 1 
+Enter the total number of elements: 
+5 
+Enter the elements: 
+2 
+3 
+1 
+4 
+5 
+***You have following choice on Integer  Numbers**** 
+1. Check Number is ODD or EVEN  
+2. Check Number is PRIME OR NOT 
+Enter your choice :1 
+2 is Even Number 
+3 is Odd Number 
+1 is Odd Number 
+4 is Even Number 
+5 is Odd Number 
+The number of Even numbers is: 2 
+The number of Odd numbers is: 3 
